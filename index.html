@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+</head>
+<body>
+  <div>
+    <div>
+      <h2 id="results">0</h2>
+    </div>
+    <div>
+      <div class="row">
+        <button>AC</button>
+        <button>+/-</button>
+        <button>%</button>
+        <button>÷</button>
+      </div>
+      <div class="row">
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button>x</button>
+      </div>
+      <div class="row">
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button>-</button>
+      </div>
+      <div class="row">
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>+</button>
+      </div>
+      <div class="row">
+        <button>0</button>
+        <button>.</button>
+        <button>=</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    const results = document.getElementById('results');
+    const buttons = document.querySelectorAll('button')
+    results.style.color = 'blue';
+    var data = [];
+    var operation = [];
+    let answer;
+
+    // const buttonClick = () => {
+      buttons.forEach(element => {
+        const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',];
+        const signs = ['+', '-', 'x', '÷', '%'];
+        element.addEventListener('click', function() {
+          this.style.color = 'red';
+          // gets first value
+          if (data[0] === undefined && numbers.includes(this.textContent) ) {
+            data.push(this.textContent)
+          } else if (data[0] !== undefined && data[1] === undefined && numbers.includes(this.textContent)) {
+              data[0] = data[0] + this.textContent
+          }
+
+          // get operation sign
+          if (signs.includes(this.textContent) && data[0] !== undefined && data[1] === undefined) {
+            data.push(this.innerHTML)
+          }
+
+          // get second value
+          if (data[0] !== undefined && data[1] !== undefined && data[2] === undefined && numbers.includes(this.textContent)) {
+            data.push(this.textContent)
+          } else if (data[2] !== undefined && numbers.includes(this.textContent)) {
+            data[2] = data[2] + this.textContent
+          }
+
+          console.log(data);
+          results.textContent = this.textContent;
+
+         // get results and display and reinitialize data          
+          if (this.textContent === '=') {
+            answer =eval(data[0] + data[1] + data[2])
+            data = [];
+            results.textContent = answer;
+          }
+        })      
+      });
+    // }
+  </script>
+  
+</body>
+</html>
